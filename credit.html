@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>提升信用</title>
+    <!-- 引入 Remix Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- 复用主页的基础样式 -->
+    <link rel="stylesheet" href="style.css">
+    <!-- 专属于信用页面的样式 -->
+    <link rel="stylesheet" href="credit.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 头部导航 -->
+        <header class="header">
+            <button class="icon-btn" onclick="window.location.href='index.html'"><i class="ri-arrow-left-s-line"></i></button>
+            <h1>提升信用</h1>
+            <button class="icon-btn"><i class="ri-question-line"></i></button>
+        </header>
+
+        <main class="content">
+            <!-- 信用环图和状态 -->
+            <section class="credit-overview">
+                <div class="large-score-circle">
+                    <svg viewBox="0 0 120 120">
+                        <!-- 背景圆环 -->
+                        <circle cx="60" cy="60" r="54" class="bg-circle"></circle>
+                        <!-- 进度圆环 -->
+                        <circle cx="60" cy="60" r="54" class="progress-circle"></circle>
+                    </svg>
+                    <div class="score-number-center">
+                        <span class="score-value">0</span>
+                    </div>
+                </div>
+                <div class="credit-status">
+                    <h2 class="status-title">评估中...</h2>
+                    <p class="status-desc">正在拉取您的最新信用数据</p>
+                </div>
+            </section>
+
+            <!-- Tabs 区 -->
+            <section class="tabs-container">
+                <div class="tabs-header">
+                    <div class="tab-btn active" data-target="records">明细记录</div>
+                    <div class="tab-btn" data-target="rules">扣分规则</div>
+                    <div class="tab-btn" data-target="impact">分数影响</div>
+                </div>
+                
+                <div class="tabs-body">
+                    <!-- 明细记录 Tab -->
+                    <div class="tab-content active" id="records">
+                        <ul class="record-list">
+                            <li>
+                                <div class="record-info">
+                                    <span class="record-title">每日登录活跃</span>
+                                    <span class="record-time">今天 08:30</span>
+                                </div>
+                                <span class="record-score positive">+1</span>
+                            </li>
+                            <li>
+                                <div class="record-info">
+                                    <span class="record-title">举报违规内容核实有效</span>
+                                    <span class="record-time">昨天 14:20</span>
+                                </div>
+                                <span class="record-score positive">+2</span>
+                            </li>
+                            <li>
+                                <div class="record-info">
+                                    <span class="record-title">评论被举报核实 (言语不当)</span>
+                                    <span class="record-time">2026-06-25</span>
+                                </div>
+                                <span class="record-score negative">-5</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 扣分规则 Tab -->
+                    <div class="tab-content" id="rules">
+                        <div class="rule-card">
+                            <h3>发送垃圾广告</h3>
+                            <p>视违规程度，单次扣除 5-20 分。若频繁发布恶意广告，将被清零分数。</p>
+                        </div>
+                        <div class="rule-card">
+                            <h3>人身攻击 / 辱骂</h3>
+                            <p>视违规程度，单次扣除 10-30 分，严重者直接封禁账号。</p>
+                        </div>
+                        <div class="rule-card">
+                            <h3>发布不实信息</h3>
+                            <p>视违规程度，单次扣除 10-20 分，并对相关内容进行下架处理。</p>
+                        </div>
+                    </div>
+
+                    <!-- 分数影响 Tab -->
+                    <div class="tab-content" id="impact">
+                        <div class="impact-level">
+                            <h4>信用优秀 (90-100分)</h4>
+                            <p>优先推荐动态展示，所有功能正常使用，享有平台最高权限。</p>
+                        </div>
+                        <div class="impact-level">
+                            <h4>信用良好 (70-89分)</h4>
+                            <p>所有基础功能正常使用。</p>
+                        </div>
+                        <div class="impact-level warning">
+                            <h4>信用较差 (50-69分)</h4>
+                            <p>限制发布动态频率，禁止使用广场评论功能。</p>
+                        </div>
+                        <div class="impact-level danger">
+                            <h4>信用极差 (0-49分)</h4>
+                            <p>账号将面临冻结风险，无法进行任何社交互动。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="credit.js"></script>
+</body>
+</html>

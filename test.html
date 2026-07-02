@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>安全中心</title>
+    <!-- 引入 Tailwind CSS 用于快速构建现代 UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 隐藏滚动条但保留滚动功能 */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            background-color: #f3f4f6;
+            /* bg-gray-100 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 渐变动画效果 */
+        .bg-gradient-animate {
+            background-size: 200% 200%;
+            animation: gradientMove 5s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* 呼吸灯效果 */
+        .pulse-soft {
+            animation: pulseSoft 2s infinite;
+        }
+
+        @keyframes pulseSoft {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="text-gray-800 antialiased">
+
+    <!-- 模拟手机屏幕容器 -->
+    <div class="max-w-md mx-auto min-h-screen bg-gray-50 relative shadow-2xl overflow-hidden pb-8">
+
+        <!-- 顶部导航栏 -->
+        <header
+            class="sticky top-0 z-50 bg-white/80 backdrop-blur-md px-4 py-3 flex items-center justify-between border-b border-gray-100">
+            <button class="p-2 -ml-2 text-gray-600 active:bg-gray-100 rounded-full transition"
+                onclick="history.back() || alert('返回上一页')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <h1 class="text-lg font-semibold">安全中心</h1>
+            <div class="w-10"></div> <!-- 占位保持标题居中 -->
+        </header>
+
+        <!-- 主体内容区 -->
+        <main class="px-4 space-y-5 pt-4">
+
+            <!-- 1. 用户信誉分展示 -->
+            <!-- 使用 id 控制动态类名 -->
+            <section id="trust-card"
+                class="relative rounded-2xl p-6 text-white shadow-lg bg-gradient-animate overflow-hidden transition-colors duration-500">
+                <!-- 装饰背景图案 -->
+                <svg class="absolute -bottom-4 -right-4 w-32 h-32 opacity-10" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+
+                <div class="flex justify-between items-start relative z-10">
+                    <div>
+                        <p class="text-white/80 text-sm mb-1">我的信誉分</p>
+                        <div class="flex items-baseline space-x-2">
+                            <span id="trust-score" class="text-5xl font-bold tracking-tight">0</span>
+                            <span class="text-sm bg-white/20 px-2 py-0.5 rounded-full backdrop-blur-sm">分</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <div
+                            class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm mb-2 pulse-soft">
+                            <!-- 动态图标容器 -->
+                            <div id="status-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <p id="status-text" class="text-sm font-medium text-white/90">加载中...</p>
+                    </div>
+                </div>
+
+                <!-- 带有挡位刻度和数字的进度条 -->
+                <div class="mt-6 relative w-full">
+                    <!-- 进度条轨道与刻度 -->
+                    <div class="w-full bg-black/20 rounded-full h-1.5 relative overflow-hidden">
+                        <!-- 动态填充 -->
+                        <div id="score-progress"
+                            class="bg-white h-1.5 rounded-full transition-all duration-1000 ease-out w-0 absolute left-0 top-0 z-10">
+                        </div>
+                        <!-- 刻度线 (50, 70, 90) -->
+                        <div class="absolute top-0 left-[50%] w-[2px] h-full bg-white/40 z-20"></div>
+                        <div class="absolute top-0 left-[70%] w-[2px] h-full bg-white/40 z-20"></div>
+                        <div class="absolute top-0 left-[90%] w-[2px] h-full bg-white/40 z-20"></div>
+                    </div>
+                    <!-- 挡位数字提示 -->
+                    <div class="relative w-full h-4 mt-1.5">
+                        <span class="absolute left-0 text-[10px] text-white/60 font-medium">0</span>
+                        <span
+                            class="absolute left-[50%] -translate-x-1/2 text-[10px] text-white/60 font-medium">50</span>
+                        <span
+                            class="absolute left-[70%] -translate-x-1/2 text-[10px] text-white/60 font-medium">70</span>
+                        <span
+                            class="absolute left-[90%] -translate-x-1/2 text-[10px] text-white/60 font-medium">90</span>
+                        <span class="absolute right-0 text-[10px] text-white/60 font-medium">100</span>
+                    </div>
+                </div>
+
+                <p id="status-desc" class="text-xs text-white/80 mt-3">正在评估您的账号状态...</p>
+            </section>
+
+            <!-- 2, 3, 4. 功能入口 (行为规范, 违规公示, 平台公告) -->
+            <section class="bg-white rounded-2xl shadow-sm p-4 flex justify-between items-center px-6">
+                <!-- 行为规范 -->
+                <button class="flex flex-col items-center space-y-2 active:scale-95 transition-transform">
+                    <div
+                        class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium text-gray-700">行为规范</span>
+                </button>
+                <!-- 违规公示 -->
+                <button class="flex flex-col items-center space-y-2 active:scale-95 transition-transform">
+                    <div class="w-12 h-12 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                            </path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium text-gray-700">违规公示</span>
+                </button>
+                <!-- 平台公告 -->
+                <button class="flex flex-col items-center space-y-2 active:scale-95 transition-transform">
+                    <div
+                        class="w-12 h-12 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-medium text-gray-700">平台公告</span>
+                </button>
+            </section>
+
+            <!-- 5. 违规账号数量展示 -->
+            <section
+                class="bg-white rounded-2xl shadow-sm p-4 flex items-center justify-between border-l-4 border-rose-500">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-rose-100 p-2 rounded-lg text-rose-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-800">守护社区环境</p>
+                        <p class="text-xs text-gray-500">本月累计处置违规账号</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span id="violation-count" class="text-xl font-bold text-rose-600">0</span>
+                    <span class="text-xs text-gray-500">个</span>
+                </div>
+            </section>
+
+            <!-- 6. 安全课堂 (3x2 布局) -->
+            <section>
+                <div class="flex justify-between items-end mb-3">
+                    <h2 class="text-lg font-bold text-gray-800">安全课堂</h2>
+                    <button class="text-xs text-gray-500 flex items-center active:text-blue-500 transition-colors">
+                        更多 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- 网格布局：移动端2列3行，总共6个卡片 -->
+                <div class="grid grid-cols-2 gap-3">
+
+                    <!-- 课程卡片 1 -->
+                    <div
+                        class="bg-white rounded-xl overflow-hidden shadow-sm active:scale-95 transition-transform cursor-pointer">
+                        <div class="h-24 bg-gradient-to-br from-indigo-200 to-purple-200 relative">
+                            <span
+                                class="absolute bottom-1 right-2 bg-black/50 text-white text-[10px] px-1.5 py-0.5 rounded">视频</span>
+                        </div>
+                        <div class="p-2.5">
+                            <h3 class="text-sm font-medium text-gray-800 line-clamp-2 leading-tight mb-1">防范电信网络诈骗指南
+                            </h3>
+                            <p class="text-[10px] text-gray-400">12.5w 次学习</p>
+                        </div>
+                    </div>
+
+                    <!-- 课程卡片 2 -->
+                    <div
+                        class="bg-white rounded-xl overflow-hidden shadow-sm active:scale-95 transition-transform cursor-pointer">
+                        <div class="h-24 bg-gradient-to-br from-green-200 to-teal-200 relative">
+                            <span
+                                class="absolute bottom-1 right-2 bg-black/50 text-white text-[10px] px-1.5 py-0.5 rounded">图文</span>
+                        </div>
+                        <div class="p-2.5">
+                            <h3 class="text-sm font-medium text-gray-800 line-clamp-2 leading-tight mb-1">个人隐私信息保护必读
+                            </h3>
+                            <p class="text-[10px] text-gray-400">9.8w 次学习</p>
+                        </div>
+                    </div>
+
+                    <!-- 课程卡片 3 -->
+                    <div
+                        class="bg-white rounded-xl overflow-hidden shadow-sm active:scale-95 transition-transform cursor-pointer">
+                        <div class="h-24 bg-gradient-to-br from-rose-200 to-orange-200 relative">
+                        </div>
+                        <div class="p-2.5">
+                            <h3 class="text-sm font-medium text-gray-800 line-clamp-2 leading-tight mb-1">拒绝网络暴力，从我做起
+                            </h3>
+                            <p class="text-[10px] text-gray-400">8.2w 次学习</p>
+                        </div>
+                    </div>
+
+                    <!-- 课程卡片 4 -->
+                    <div
+                        class="bg-white rounded-xl overflow-hidden shadow-sm active:scale-95 transition-transform cursor-pointer">
+                        <div class="h-24 bg-gradient-to-br from-blue-200 to-cyan-200 relative">
+                        </div>
+                        <div class="p-2.5">
+                            <h3 class="text-sm font-medium text-gray-800 line-clamp-2 leading-tight mb-1">如何识别“杀猪盘”骗局？
+                            </h3>
+                            <p class="text-[10px] text-gray-400">15.1w 次学习</p>
+                        </div>
+                    </div>
+
+                    <!-- 课程卡片 5 -->
+                    <div
+                        class="bg-white rounded-xl overflow-hidden shadow-sm active:scale-95 transition-transform cursor-pointer">
+                        <div class="h-24 bg-gradient-to-br from-yellow-200 to-amber-200 relative">
+                            <span
+                                class="absolute bottom-1 right-2 bg-black/50 text-white text-[10px] px-1.5 py-0.5 rounded">测验</span>
+                        </div>
+                        <div class="p-2.5">
+                            <h3 class="text-sm font-medium text-gray-800 line-clamp-2 leading-tight mb-1">账号安全等级测试挑战
+                            </h3>
+                            <p class="text-[10px] text-gray-400">5.6w 次学习</p>
+                        </div>
+                    </div>
+
+                    <!-- 课程卡片 6 -->
+                    <div
+                        class="bg-white rounded-xl overflow-hidden shadow-sm active:scale-95 transition-transform cursor-pointer">
+                        <div class="h-24 bg-gradient-to-br from-pink-200 to-rose-200 relative">
+                        </div>
+                        <div class="p-2.5">
+                            <h3 class="text-sm font-medium text-gray-800 line-clamp-2 leading-tight mb-1">未成年人网络安全科普
+                            </h3>
+                            <p class="text-[10px] text-gray-400">11.3w 次学习</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- 底部占位，避免被系统导航栏遮挡 -->
+            <div class="h-6"></div>
+
+        </main>
+    </div>
+
+    <!-- JavaScript 用于动画效果 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. 数字滚动动画函数
+            function animateValue(obj, start, end, duration, formatStr = false) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    // 使用 easeOutQuart 缓动函数让数字最后变慢
+                    const easeOutProgress = 1 - Math.pow(1 - progress, 4);
+                    let currentVal = Math.floor(easeOutProgress * (end - start) + start);
+
+                    if (formatStr) {
+                        obj.innerHTML = currentVal.toLocaleString();
+                    } else {
+                        obj.innerHTML = currentVal;
+                    }
+
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    } else {
+                        if (formatStr) obj.innerHTML = end.toLocaleString();
+                        else obj.innerHTML = end;
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            // --- 评分等级配置 ---
+            const scoreConfigs = [
+                {
+                    min: 0, max: 50,
+                    classes: 'bg-gradient-to-br from-rose-500 via-red-600 to-rose-700',
+                    text: '信誉较差',
+                    desc: '您的账号存在严重违规风险，部分功能已受限。',
+                    icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
+                },
+                {
+                    min: 51, max: 70,
+                    classes: 'bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600',
+                    text: '信誉一般',
+                    desc: '请注意规范发言，避免触碰社区红线。',
+                    icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>'
+                },
+                {
+                    min: 71, max: 90,
+                    classes: 'bg-gradient-to-br from-emerald-400 via-teal-500 to-emerald-600',
+                    text: '信誉良好',
+                    desc: '您的账号状态健康，继续保持良好的社交礼仪。',
+                    icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>'
+                },
+                {
+                    min: 91, max: 100,
+                    classes: 'bg-gradient-to-br from-blue-500 via-indigo-500 to-blue-700',
+                    text: '信誉极好',
+                    desc: '感谢您共同维护社区环境，已解锁多项专属权益。',
+                    icon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>'
+                }
+            ];
+
+            // 2. 触发信誉分动画 (这里为了演示，每次刷新随机生成一个分数)
+            // 在实际应用中，这里的值应该来自后端 API
+            const randomScores = [35, 62, 85, 98];
+            const targetScore = randomScores[Math.floor(Math.random() * randomScores.length)];
+            // 如果你想测试特定分数，可以直接赋值，如: const targetScore = 45;
+
+            const scoreElement = document.getElementById('trust-score');
+            const progressElement = document.getElementById('score-progress');
+            const cardElement = document.getElementById('trust-card');
+            const statusText = document.getElementById('status-text');
+            const statusDesc = document.getElementById('status-desc');
+            const statusIcon = document.getElementById('status-icon');
+
+            // 根据分数找到对应的配置
+            const config = scoreConfigs.find(c => targetScore >= c.min && targetScore <= c.max);
+
+            if (config) {
+                // 延迟一点开始动画，视觉效果更好
+                setTimeout(() => {
+                    // 更新卡片样式和内容
+                    cardElement.className = `relative rounded-2xl p-6 text-white shadow-lg bg-gradient-animate overflow-hidden transition-colors duration-500 ${config.classes}`;
+                    statusText.innerText = config.text;
+                    statusDesc.innerText = config.desc;
+                    statusIcon.innerHTML = config.icon;
+
+                    // 开始数字和进度条动画
+                    animateValue(scoreElement, 0, targetScore, 1500);
+                    progressElement.style.width = targetScore + '%';
+                }, 300);
+            }
+
+            // 3. 触发违规账号数量动画 (带千位分隔符)
+            const targetViolations = 12458;
+            const violationElement = document.getElementById('violation-count');
+            setTimeout(() => {
+                animateValue(violationElement, 0, targetViolations, 2000, true);
+            }, 500);
+
+            // 4. 为所有卡片添加简单的点击反馈
+            const cards = document.querySelectorAll('.grid > div');
+            cards.forEach(card => {
+                card.addEventListener('click', function () {
+                    const title = this.querySelector('h3').innerText;
+                    // 在真实App中这里会跳转页面
+                    console.log('打开课程: ' + title);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

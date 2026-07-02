@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>安全中心</title>
+    <!-- 使用 Remix Icon 提供精美的图标 -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 头部导航 -->
+        <header class="header">
+            <button class="icon-btn"><i class="ri-arrow-left-s-line"></i></button>
+            <h1>安全中心</h1>
+            <button class="icon-btn"><i class="ri-more-2-line"></i></button>
+        </header>
+
+        <main class="content">
+            <!-- 1. 用户信誉分展示 -->
+            <section id="trust-card" class="new-score-card" data-status="excellent">
+                <!-- 装饰背景图案 -->
+                <svg class="score-card-bg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                
+                <div class="score-card-header">
+                    <div class="score-card-left">
+                        <p class="score-card-subtitle">我的信誉分</p>
+                        <div class="score-card-main-number">
+                            <span class="score-value" id="trust-score">0</span>
+                            <span class="score-unit">分</span>
+                        </div>
+                    </div>
+                    <div class="score-card-right">
+                        <div class="score-card-badge pulse-soft">
+                            <div id="status-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            </div>
+                        </div>
+                        <p class="score-card-status" id="status-text">加载中...</p>
+                    </div>
+                </div>
+                
+                <!-- 带有挡位刻度和数字的进度条 -->
+                <div class="score-progress-container">
+                    <div class="score-progress-bg">
+                        <!-- 动态填充 -->
+                        <div class="score-progress-fill" id="score-progress"></div>
+                        <!-- 刻度线 (50, 70, 90) -->
+                        <div class="score-tick" style="left: 50%;"></div>
+                        <div class="score-tick" style="left: 70%;"></div>
+                        <div class="score-tick" style="left: 90%;"></div>
+                    </div>
+                    <!-- 挡位数字提示 -->
+                    <div class="score-labels">
+                        <span style="left: 0%;">0</span>
+                        <span style="left: 50%; transform: translateX(-50%);">50</span>
+                        <span style="left: 70%; transform: translateX(-50%);">70</span>
+                        <span style="left: 90%; transform: translateX(-50%);">90</span>
+                        <span style="left: 100%; transform: translateX(-100%);">100</span>
+                    </div>
+                </div>
+                
+                <div class="score-card-footer">
+                    <p class="score-card-desc" id="status-desc">正在评估您的账号状态...</p>
+                    <button class="btn-elevate-credit" onclick="window.location.href='credit.html'">提升信用 <i class="ri-arrow-right-s-line"></i></button>
+                </div>
+            </section>
+
+            <!-- 5. 违规账号展示及动态播报 -->
+            <section class="stats-container">
+                <div class="stats-banner">
+                    <div class="stats-icon">
+                        <i class="ri-shield-check-fill"></i>
+                    </div>
+                    <div class="stats-text">
+                        <p>本月平台已累计处置违规账号 <span class="highlight">12,458</span> 个</p>
+                    </div>
+                </div>
+                <!-- 循环跳动播报区 -->
+                <div class="punishment-ticker">
+                    <div class="ticker-scroll" id="tickerScroll">
+                        <!-- JS 将动态注入列表 -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 功能入口区域 (2, 3, 4) -->
+            <section class="quick-actions">
+                <!-- 2. 行为规范功能入口 -->
+                <div class="action-item">
+                    <div class="icon-wrapper bg-blue">
+                        <i class="ri-file-list-3-line"></i>
+                    </div>
+                    <span>行为规范</span>
+                </div>
+                <!-- 3. 违规公示功能入口 -->
+                <div class="action-item">
+                    <div class="icon-wrapper bg-orange">
+                        <i class="ri-megaphone-line"></i>
+                    </div>
+                    <span>违规公示</span>
+                </div>
+                <!-- 4. 平台公告功能入口 -->
+                <div class="action-item">
+                    <div class="icon-wrapper bg-green">
+                        <i class="ri-notification-3-line"></i>
+                    </div>
+                    <span>平台公告</span>
+                </div>
+            </section>
+
+            <!-- 6. 安全课堂（3×2） -->
+            <section class="security-class">
+                <div class="section-header">
+                    <h2>安全课堂</h2>
+                    <a href="#" class="more-link">更多 <i class="ri-arrow-right-s-line"></i></a>
+                </div>
+                <!-- 3x2 网格布局 -->
+                <div class="class-grid">
+                    <div class="class-card">
+                        <div class="card-img-wrap">
+                            <img src="images/facetime_scam.png" alt="警惕face time诈骗">
+                        </div>
+                        <div class="class-card-title">警惕face time诈骗</div>
+                    </div>
+                    <div class="class-card">
+                        <div class="card-img-wrap">
+                            <img src="images/internet_slang.png" alt="常见的“网言网语”">
+                        </div>
+                        <div class="class-card-title">常见的“网言网语”</div>
+                    </div>
+                    <div class="class-card">
+                        <div class="card-img-wrap">
+                            <img src="images/antiscam_guide.png" alt="用户防骗指南">
+                        </div>
+                        <div class="class-card-title">用户防骗指南</div>
+                    </div>
+                    <div class="class-card">
+                        <div class="card-img-wrap">
+                            <img src="images/routine_recognition.png" alt="套路识别课堂">
+                        </div>
+                        <div class="class-card-title">套路识别课堂</div>
+                    </div>
+                    <div class="class-card">
+                        <div class="card-img-wrap">
+                            <img src="images/privacy_protect.png" alt="隐私信息保护">
+                        </div>
+                        <div class="class-card-title">隐私信息保护</div>
+                    </div>
+                    <div class="class-card">
+                        <div class="card-img-wrap">
+                            <img src="images/account_security.png" alt="账号安全须知">
+                        </div>
+                        <div class="class-card-title">账号安全须知</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
