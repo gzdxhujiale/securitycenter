@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>违规公示</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <button class="icon-btn" onclick="history.back()"><i class="ri-arrow-left-s-line"></i></button>
+            <h1>违规公示</h1>
+            <button class="icon-btn"><i class="ri-more-2-line"></i></button>
+        </header>
+
+        <main class="page-container">
+            <div class="feed-list">
+                <!-- 第一栏更新 -->
+                <div class="feed-time">2026-07-02 10:05:03</div>
+                <div class="feed-item">
+                    <div class="feed-cover">
+                        <span class="feed-tag tag-absolute" style="color:#ef4444;">专项治理</span>
+                        <!-- 没有真实封面时，用渐变和图标代替 -->
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg, #fca5a5, #ef4444);display:flex;align-items:center;justify-content:center;color:white;font-size:32px;opacity:0.9;"><i class="ri-forbid-2-line"></i></div>
+                    </div>
+                    <div class="feed-info">
+                        <div class="feed-title">6月平台严厉打击“擦边低俗”内容的处罚公告</div>
+                    </div>
+                </div>
+
+                <!-- 第二栏更新 -->
+                <div class="feed-time">2026-06-01 14:30:00</div>
+                <div class="feed-item">
+                    <div class="feed-cover">
+                        <span class="feed-tag tag-absolute" style="color:#f59e0b;">月度报告</span>
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg, #fcd34d, #f59e0b);display:flex;align-items:center;justify-content:center;color:white;font-size:32px;opacity:0.9;"><i class="ri-alert-line"></i></div>
+                    </div>
+                    <div class="feed-info">
+                        <div class="feed-title">5月安全报告：封禁涉诈账号 3,241 个</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

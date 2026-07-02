@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -8,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="app-container">
         <!-- 头部导航 -->
@@ -21,8 +23,10 @@
             <!-- 1. 用户信誉分展示 -->
             <section id="trust-card" class="new-score-card" data-status="excellent">
                 <!-- 装饰背景图案 -->
-                <svg class="score-card-bg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                
+                <svg class="score-card-bg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+
                 <div class="score-card-header">
                     <div class="score-card-left">
                         <p class="score-card-subtitle">我的信誉分</p>
@@ -34,13 +38,18 @@
                     <div class="score-card-right">
                         <div class="score-card-badge pulse-soft">
                             <div id="status-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
                             </div>
                         </div>
                         <p class="score-card-status" id="status-text">加载中...</p>
                     </div>
                 </div>
-                
+
                 <!-- 带有挡位刻度和数字的进度条 -->
                 <div class="score-progress-container">
                     <div class="score-progress-bg">
@@ -60,57 +69,58 @@
                         <span style="left: 100%; transform: translateX(-100%);">100</span>
                     </div>
                 </div>
-                
+
                 <div class="score-card-footer">
                     <p class="score-card-desc" id="status-desc">正在评估您的账号状态...</p>
-                    <button class="btn-elevate-credit" onclick="window.location.href='credit.html'">提升信用 <i class="ri-arrow-right-s-line"></i></button>
+                    <button class="btn-elevate-credit" onclick="window.location.href='credit.html'">提升信用 <i
+                            class="ri-arrow-right-s-line"></i></button>
                 </div>
             </section>
 
-            <!-- 5. 违规账号展示及动态播报 -->
-            <section class="stats-container">
-                <div class="stats-banner">
-                    <div class="stats-icon">
-                        <i class="ri-shield-check-fill"></i>
+            <!-- 2. 功能入口区域 (磁贴 Bento 布局) -->
+            <section class="quick-actions-bento">
+                <!-- 2.1 行为规范功能入口 -->
+                <div class="bento-item theme-blue" onclick="window.location.href='rules.html'">
+                    <i class="ri-file-list-3-fill bento-icon"></i>
+                    <div class="bento-text">行为规范</div>
+                    <i class="ri-file-list-3-fill bento-bg-icon"></i>
+                </div>
+                <!-- 2.2 违规公示功能入口 -->
+                <div class="bento-item theme-orange" onclick="window.location.href='violations.html'">
+                    <i class="ri-megaphone-fill bento-icon"></i>
+                    <div class="bento-text">违规公示</div>
+                    <i class="ri-megaphone-fill bento-bg-icon"></i>
+                </div>
+                <!-- 2.3 平台公告功能入口 -->
+                <div class="bento-item theme-green" onclick="window.location.href='announcements.html'">
+                    <i class="ri-notification-3-fill bento-icon"></i>
+                    <div class="bento-text">平台公告</div>
+                    <i class="ri-notification-3-fill bento-bg-icon"></i>
+                </div>
+            </section>
+
+            <!-- 3. 违规账号展示及动态播报 (胶囊样式) -->
+            <section class="stats-modern-container">
+                <div class="stats-modern-banner">
+                    <div class="stats-modern-icon">
+                        <i class="ri-shield-star-fill"></i>
                     </div>
-                    <div class="stats-text">
-                        <p>本月平台已累计处置违规账号 <span class="highlight">12,458</span> 个</p>
+                    <div class="stats-modern-text">
+                        本月累计处置违规账号 <span class="highlight">12,458</span> 个
                     </div>
                 </div>
-                <!-- 循环跳动播报区 -->
-                <div class="punishment-ticker">
-                    <div class="ticker-scroll" id="tickerScroll">
-                        <!-- JS 将动态注入列表 -->
+                <!-- 半透明毛玻璃胶囊播报区 -->
+                <div class="glass-capsule-ticker">
+                    <div class="glass-capsule-icon"><i class="ri-volume-up-line pulse-soft"></i></div>
+                    <div class="punishment-ticker">
+                        <div class="ticker-scroll" id="tickerScroll">
+                            <!-- JS 将动态注入列表 -->
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 功能入口区域 (2, 3, 4) -->
-            <section class="quick-actions">
-                <!-- 2. 行为规范功能入口 -->
-                <div class="action-item">
-                    <div class="icon-wrapper bg-blue">
-                        <i class="ri-file-list-3-line"></i>
-                    </div>
-                    <span>行为规范</span>
-                </div>
-                <!-- 3. 违规公示功能入口 -->
-                <div class="action-item">
-                    <div class="icon-wrapper bg-orange">
-                        <i class="ri-megaphone-line"></i>
-                    </div>
-                    <span>违规公示</span>
-                </div>
-                <!-- 4. 平台公告功能入口 -->
-                <div class="action-item">
-                    <div class="icon-wrapper bg-green">
-                        <i class="ri-notification-3-line"></i>
-                    </div>
-                    <span>平台公告</span>
-                </div>
-            </section>
-
-            <!-- 6. 安全课堂（3×2） -->
+            <!-- 4. 安全课堂（3×2） -->
             <section class="security-class">
                 <div class="section-header">
                     <h2>安全课堂</h2>
@@ -160,4 +170,5 @@
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
